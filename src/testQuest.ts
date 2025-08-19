@@ -1,12 +1,6 @@
 import { ConversationNode } from "./quest";
 
 export const testQuest = {
-	matrix: [
-		[false, true, false, true],
-		[false, false, true, false],
-		[false, false, false, true],
-		[true, false, false, false],
-	],
 	type: "conversation",
 	data: [
 		{
