@@ -1,0 +1,24 @@
+.container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.main {
+	flex-grow: 1;
+	display: flex;
+}
+
+.visual {
+	flex-grow: 1;
+}
+
+.context {
+	min-width: 30rem;
+	border: 2px solid;
+}
+
+.bottom_bar {
+	border: 3px dashed green;
+	min-height: 25rem;
+}
