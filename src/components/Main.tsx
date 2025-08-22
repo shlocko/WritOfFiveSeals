@@ -1,7 +1,7 @@
 import { Component, For, Show } from "solid-js";
 import styles from "../styles/Main.module.css";
 import { globalState, setGlobalState } from "../global";
-import { testMatrix } from "../testQuest";
+import { world } from "../world";
 
 export const Main: Component = () => {
 	return (
@@ -19,54 +19,35 @@ export const Main: Component = () => {
 					classList={{
 						[styles.visual]: true,
 					}}
-				></div>
+				>
+					<p>Travel</p>
+					<p>{world.areas[globalState.area].name}</p>
+					<For
+						each={world.getOutGoingDestinationsWithWeigt(
+							globalState.area,
+						)}
+					>
+						{(edge) => (
+							<button
+								class="px-3 py-1 rounded border bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+								onClick={() => {
+									setGlobalState("area", edge.area);
+								}}
+							>
+								<p>
+									{edge.area}: {edge.weight}
+								</p>
+							</button>
+						)}
+					</For>
+				</div>
 				<div
 					classList={{
 						[styles.context]: true,
 					}}
 				>
-					<p>
-						{
-							globalState.quest.quest.data[
-								globalState.quest.position
-							].text
-						}
-					</p>
+					<p></p>
 					<hr />
-					<For
-						each={Object.entries(
-							globalState.quest.quest.data[
-								globalState.quest.position
-							].responses,
-						)}
-					>
-						{(entry, i) => {
-							let [key, value] = entry;
-							return (
-								<div>
-									<button
-										onClick={() => {
-											setGlobalState(
-												"quest",
-												"history",
-												(h) => [...h, Number(key)],
-											);
-											setGlobalState(
-												"quest",
-												"position",
-												Number(key),
-											);
-										}}
-									>
-										{" "}
-										{value}{" "}
-									</button>
-								</div>
-							);
-						}}
-					</For>
-					<hr />
-					<p>{globalState.quest.history}</p>
 				</div>
 			</div>
 			<div

@@ -1,4 +1,4 @@
-import { ConversationNode } from "./quest";
+import { ConversationNode } from "./story";
 
 export const testQuest = {
 	type: "conversation",

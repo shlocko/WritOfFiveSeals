@@ -1,15 +1,8 @@
 import { createStore } from "solid-js/store";
 import { Player } from "./player";
-import { Quest } from "./quest";
-import { testQuest } from "./testQuest";
+import { AreaID } from "./world";
 
 export const [globalState, setGlobalState] = createStore({
 	player: {} as Player,
-	quest: {
-		quest: testQuest,
-		position: 1,
-		history: [] as number[],
-	},
+	area: "startingLocation" as AreaID,
 });
-
-const [quests, setQuests] = createStore<Quest[]>([]);
