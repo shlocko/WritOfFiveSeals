@@ -18,7 +18,6 @@ export class World {
 		let edges = this.getOutgoingEdges(area);
 		let outgoingEdges: OutgoingEdge[] = [];
 		for (let edge of edges) {
-			console.log(edge.to);
 			outgoingEdges.push(
 				edge.to === area
 					? {
