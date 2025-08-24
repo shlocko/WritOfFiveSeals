@@ -1,7 +1,8 @@
-import { Component, For, Show } from "solid-js";
+import { Component, createMemo, For, Show } from "solid-js";
 import styles from "../styles/Main.module.css";
-import { globalState, setGlobalState } from "../global";
+import { globalState, routes, setGlobalState } from "../global";
 import { world } from "../world";
+import { dialogue, moveDialogue, setDialogue } from "../story";
 
 export const Main: Component = () => {
 	return (
@@ -23,7 +24,7 @@ export const Main: Component = () => {
 					<p>Travel</p>
 					<p>{world.areas[globalState.area].name}</p>
 					<For
-						each={world.getOutGoingDestinationsWithWeigt(
+						each={world.getOutgoingDestinationsWithWeight(
 							globalState.area,
 						)}
 					>
@@ -35,7 +36,13 @@ export const Main: Component = () => {
 								}}
 							>
 								<p>
-									{edge.area}: {edge.weight}
+									<Show when={edge.name || edge.route}>
+										{edge.name
+											? edge.name
+											: routes[edge.route!]}{" "}
+										to{" "}
+									</Show>
+									{world.areas[edge.area].name}: {edge.weight}
 								</p>
 							</button>
 						)}
@@ -46,8 +53,43 @@ export const Main: Component = () => {
 						[styles.context]: true,
 					}}
 				>
-					<p></p>
+					<p>Conversation</p>
 					<hr />
+					<p>{dialogue.nodes[dialogue.state.current].text}</p>
+					<div class="flex flex-col">
+						<For
+							each={dialogue.edges.filter(
+								(edge) =>
+									edge.from ===
+									dialogue.nodes[dialogue.state.current].id,
+							)}
+						>
+							{(edge) => {
+								return (
+									<button
+										class="px-3 py-1 rounded border bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+										onClick={() => {
+											setDialogue(
+												"state",
+												"current",
+												edge.to,
+											);
+											setDialogue("history", (h) => {
+												let arr = h.slice();
+												arr.push(edge.to);
+												return arr;
+											});
+										}}
+									>
+										- {edge.response}
+									</button>
+								);
+							}}
+						</For>
+					</div>
+					<hr />
+					<p>History</p>
+					<p>{dialogue.history}</p>
 				</div>
 			</div>
 			<div

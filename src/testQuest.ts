@@ -1,4 +1,4 @@
-import { ConversationNode } from "./story";
+import { DialogueNode } from "./story";
 
 export const testQuest = {
 	type: "conversation",
@@ -37,5 +37,5 @@ export const testQuest = {
 			text: "Not talkative, eh? No matter, have a nice day anyways, stranger.",
 			responses: {},
 		},
-	] as ConversationNode[],
+	] as DialogueNode[],
 };
